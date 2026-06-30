@@ -32,11 +32,11 @@ USER root
 RUN cd /usr/lib/x86_64-linux-gnu \
     && ln -s libglut.so.3.12.0 libglut.so.3
 
-RUN git clone -b master https://github.com/XPhantomad/${PROJECT_DIR}.git
+RUN git clone -b master https://github.com/XPhantomad/Multispectator.git
 
 USER root
 # Install ARGoS3
-RUN cd ${PROJECT_DIR} \
+RUN cd Multispectator \
     # && git pull
     && cd Dependencies \
     && apt-get install -y ./argos3_simulator-3.0.0-x86_64-beta59.deb
@@ -44,7 +44,7 @@ RUN cd ${PROJECT_DIR} \
 # Install GSL for ARGoS3-ROS2-Bridge
 RUN apt-get install -y libgsl-dev
 
-RUN cd ${PROJECT_DIR} \
+RUN cd Multispectator \
     && cd Dependencies \
     && tar -zxf gsl-latest.tar.gz \
     && cd gsl-2.8 \
@@ -57,7 +57,7 @@ RUN cd ${PROJECT_DIR} \
 ENV LD_LIBRARY_PATH="/root/gsl/lib:$LD_LIBRARY_PATH"
 
 # Build ARGoS3-ROS2-Bridge
-RUN ln -s ${PROJECT_DIR}/rosWorkspace ros_ws 
+RUN ln -s Multispectator/rosWorkspace ros_ws 
 
 RUN cd ros_ws \
     && chmod +x build.sh \
@@ -74,21 +74,21 @@ RUN julia -e 'using Pkg; Pkg.add.(["Sockets", "JSON", "Parameters"])'
 
 
 # Setup Simulation
-RUN cd ${PROJECT_DIR}/runtimemodel \
+RUN cd Multispectator/runtimemodel \
     && python3 -m venv . \
     && source bin/activate \
     && source /opt/ros/jazzy/setup.bash \
     && source ../rosWorkspace/install/setup.bash \
     && pip install pyyaml pyecore numpy 
 
-RUN cd ${PROJECT_DIR}/webapp \
+RUN cd Multispectator/webapp \
     && python3 -m venv . \
     && source bin/activate \
     && source /opt/ros/jazzy/setup.bash \
     && source ../rosWorkspace/install/setup.bash \
     && pip install -r requirements.txt 
     
-RUN cd ${PROJECT_DIR}/startup \
+RUN cd Multispectator/startup \
     && python3 -m venv . \
     && source bin/activate \
     && source /opt/ros/jazzy/setup.bash \
