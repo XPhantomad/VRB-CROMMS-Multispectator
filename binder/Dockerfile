@@ -70,7 +70,7 @@ RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.10/julia-1.10.10-lin
 
 ENV PATH="julia-1.10.10/bin:$PATH"
 
-RUN julia -e 'using Pkg; Pkg.add.(["Sockets", "JSON", "Parameters"])'
+RUN julia -e 'using Pkg; Pkg.add.(["Sockets", "JSON", "Parameters", "Colors"])'
 
 
 # Setup Simulation
