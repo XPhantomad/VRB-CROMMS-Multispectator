@@ -3,6 +3,7 @@ FROM intel4coro/jupyter-ros2:jazzy-py3.12
 
 
 USER root
+USER root
 ENV PATH=$HOME/.local/bin:$PATH
 
 # Set Working Directory
