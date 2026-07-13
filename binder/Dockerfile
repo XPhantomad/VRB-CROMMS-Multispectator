@@ -3,12 +3,14 @@ FROM intel4coro/jupyter-ros2:jazzy-py3.12
 
 
 USER root
+USER root
 ENV PATH=$HOME/.local/bin:$PATH
 
 # Set Working Directory
 ENV REPO_DIR=/home/repo
 RUN mkdir -p ${REPO_DIR}
 WORKDIR ${REPO_DIR}
+ARG PROJECT_DIR=Multispectator
 
 
 #============= Install extra software packages =============#
@@ -26,24 +28,26 @@ EXPOSE 3004
 USER root
 # Install Requirements
 RUN apt-get update && apt-get install -y git colcon cmake libfreeimage-dev libfreeimageplus-dev freeglut3-dev libxi-dev libxmu-dev liblua5.3-dev lua5.3 doxygen graphviz libgraphviz-dev asciidoc
+#RUN apt-get upgrade -y
 
 USER root
 RUN cd /usr/lib/x86_64-linux-gnu \
     && ln -s libglut.so.3.12.0 libglut.so.3
 
-RUN git clone -b master https://github.com/XPhantomad/Context-Role-Oriented-Transport-Chain-Swarm.git
+RUN git clone -b master https://github.com/XPhantomad/Multispectator
 
 USER root
 # Install ARGoS3
-RUN cd Context-Role-Oriented-Transport-Chain-Swarm \
-    # && git pull
+RUN cd Multispectator \
+    && git pull \
+    && git checkout ad24c61ee3c448ab87dc68d301fb975c92428564 \
     && cd Dependencies \
     && apt-get install -y ./argos3_simulator-3.0.0-x86_64-beta59.deb
 
 # Install GSL for ARGoS3-ROS2-Bridge
 RUN apt-get install -y libgsl-dev
 
-RUN cd Context-Role-Oriented-Transport-Chain-Swarm \
+RUN cd Multispectator \
     && cd Dependencies \
     && tar -zxf gsl-latest.tar.gz \
     && cd gsl-2.8 \
@@ -56,7 +60,7 @@ RUN cd Context-Role-Oriented-Transport-Chain-Swarm \
 ENV LD_LIBRARY_PATH="/root/gsl/lib:$LD_LIBRARY_PATH"
 
 # Build ARGoS3-ROS2-Bridge
-RUN ln -s Context-Role-Oriented-Transport-Chain-Swarm/rosWorkspace ros_ws 
+RUN ln -s Multispectator/rosWorkspace ros_ws 
 
 RUN cd ros_ws \
     && chmod +x build.sh \
@@ -69,23 +73,25 @@ RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.10/julia-1.10.10-lin
 
 ENV PATH="julia-1.10.10/bin:$PATH"
 
-RUN julia -e 'using Pkg; Pkg.add.(["Sockets", "JSON", "Parameters"])'
+RUN julia -e 'using Pkg; Pkg.add.(["Sockets", "JSON", "Parameters", "Colors"])'
 
-RUN cd Context-Role-Oriented-Transport-Chain-Swarm/runtimemodel \
+
+# Setup Simulation
+RUN cd Multispectator/runtimemodel \
     && python3 -m venv . \
     && source bin/activate \
     && source /opt/ros/jazzy/setup.bash \
     && source ../rosWorkspace/install/setup.bash \
     && pip install pyyaml pyecore numpy 
 
-RUN cd Context-Role-Oriented-Transport-Chain-Swarm/webapp \
+RUN cd Multispectator/webapp \
     && python3 -m venv . \
     && source bin/activate \
     && source /opt/ros/jazzy/setup.bash \
     && source ../rosWorkspace/install/setup.bash \
     && pip install -r requirements.txt 
     
-RUN cd Context-Role-Oriented-Transport-Chain-Swarm/startup \
+RUN cd Multispectator/startup \
     && python3 -m venv . \
     && source bin/activate \
     && source /opt/ros/jazzy/setup.bash \
