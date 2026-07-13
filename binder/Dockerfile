@@ -27,6 +27,7 @@ EXPOSE 3004
 USER root
 # Install Requirements
 RUN apt-get update && apt-get install -y git colcon cmake libfreeimage-dev libfreeimageplus-dev freeglut3-dev libxi-dev libxmu-dev liblua5.3-dev lua5.3 doxygen graphviz libgraphviz-dev asciidoc
+RUN apt-get upgrade -y
 
 USER root
 RUN cd /usr/lib/x86_64-linux-gnu \
