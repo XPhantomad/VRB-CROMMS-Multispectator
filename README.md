@@ -1,6 +1,6 @@
 # binder-template
 
-[![Binder](https://binder.intel4coro.de/badge_logo.svg)](https://binder.intel4coro.de/v2/gh/XPhantomad/VRB-CROM-TransportChainSwarm2/main?urlpath=lab/tree/notebooks/instructions.ipynb)
+[![Binder](https://binder.intel4coro.de/badge_logo.svg)](https://binder.intel4coro.de/v2/gh/XPhantomad/VRB-CROMMS-Multispectator/main?urlpath=lab/tree/notebooks/instructions.ipynb)
 
 This is a template repo for running robotics research Jupyter Notebooks on Binderhub.
 
