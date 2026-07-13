@@ -37,7 +37,8 @@ RUN git clone -b master https://github.com/XPhantomad/Multispectator
 USER root
 # Install ARGoS3
 RUN cd Multispectator \
-    # && git pull
+    && git pull
+    && git checkout ad24c61ee3c448ab87dc68d301fb975c92428564
     && cd Dependencies \
     && apt-get install -y ./argos3_simulator-3.0.0-x86_64-beta59.deb
 
