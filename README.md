@@ -1,17 +1,17 @@
 # binder-template
 
-[![Binder](https://binder.intel4coro.de/badge_logo.svg)](https://binder.intel4coro.de/v2/gh/XPhantomad/VRB-CROM-TransportChainSwarm2/main?urlpath=lab/tree/notebooks/instructions.ipynb)
+[![Binder](https://binder.intel4coro.de/badge_logo.svg)](https://binder.intel4coro.de/v2/gh/XPhantomad/VRB-CROMMS-Multispectator/main?urlpath=lab/tree/notebooks/instructions.ipynb)
 
 This is a template repo for running robotics research Jupyter Notebooks on Binderhub.
 
-## Quick Start: Start Transport Chain Swarm
+## Quick Start: Start Multispectator - A Multi Robot Monitoring System
 
 - click on the binder item above and open the environment
 - disable the simple switch in the bottom left corner
 - open a virtual desktop from the launcher
 - open a terminal and run in "repo" directory:
-  - ```chmod +x ./Context-Role-Oriented-Transport-Chain-Swarm/VRBrun.sh```
-  - ```./Context-Role-Oriented-Transport-Chain-Swarm/VRBrun.sh```
+  - ```chmod +x ./Multispectator/VRBrun.sh```
+  - ```./Multispectator/VRBrun.sh```
 - start the simulation in the virtual desktop in argos3
 - open another terminal to start the Web App in chrome via: 
 ```
