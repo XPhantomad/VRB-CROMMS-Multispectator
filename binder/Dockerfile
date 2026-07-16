@@ -33,6 +33,8 @@ USER root
 RUN cd /usr/lib/x86_64-linux-gnu \
     && ln -s libglut.so.3.12.0 libglut.so.3
 
+RUN sudo apt install -y python3.12 python3.12-venv ros-dev-tools 
+
 RUN git clone -b master https://github.com/XPhantomad/Multispectator
 
 USER root
@@ -43,7 +45,7 @@ RUN cd Multispectator \
     && cd Dependencies \
     && apt-get install -y ./argos3_simulator-3.0.0-x86_64-beta59.deb
 
-# Install GSL for ARGoS3-ROS2-Bridge
+# Install GSL for ARGoS3-ROS2-Bridge #TODO switch this above and provide Dependencies already in the VRB Repo
 RUN apt-get install -y libgsl-dev
 
 RUN cd Multispectator \
@@ -64,8 +66,6 @@ RUN ln -s Multispectator/rosWorkspace ros_ws
 RUN cd ros_ws \
     && chmod +x build.sh \
     && ./build.sh 
-
-RUN sudo apt install -y python3.12 python3.12-venv ros-dev-tools 
 
 RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.10/julia-1.10.10-linux-x86_64.tar.gz \
     && tar xzf julia-1.10.10-linux-x86_64.tar.gz
