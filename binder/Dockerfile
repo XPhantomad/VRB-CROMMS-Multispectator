@@ -3,7 +3,6 @@ FROM intel4coro/jupyter-ros2:jazzy-py3.12
 
 
 USER root
-USER root
 ENV PATH=$HOME/.local/bin:$PATH
 
 # Set Working Directory
@@ -40,7 +39,7 @@ USER root
 # Install ARGoS3
 RUN cd Multispectator \
     && git pull \
-    && git checkout ad24c61ee3c448ab87dc68d301fb975c92428564 \
+    && git checkout 57e5b967f19ff99417b1559d13c2b965dc975e60 \
     && cd Dependencies \
     && apt-get install -y ./argos3_simulator-3.0.0-x86_64-beta59.deb
 
