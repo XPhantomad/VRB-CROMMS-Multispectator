@@ -1,7 +1,7 @@
 # Dockerfile of the base image: https://github.com/IntEL4CoRo/jupyter-ros2/blob/main/Dockerfile
 FROM intel4coro/jupyter-ros2:jazzy-py3.12
 
-
+USER root
 USER root
 ENV PATH=$HOME/.local/bin:$PATH
 
@@ -14,9 +14,6 @@ ARG PROJECT_DIR=Multispectator
 
 #============= Install extra software packages =============#
 
-RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
-    apt-get install -y ./google-chrome-stable_current_amd64.deb && \
-    rm google-chrome-stable_current_amd64.deb 
 EXPOSE 3004
 
 # Change the default shell to Bash
@@ -27,13 +24,12 @@ EXPOSE 3004
 USER root
 # Install Requirements
 RUN apt-get update && apt-get install -y git colcon cmake libfreeimage-dev libfreeimageplus-dev freeglut3-dev libxi-dev libxmu-dev liblua5.3-dev lua5.3 doxygen graphviz libgraphviz-dev asciidoc
+RUN sudo apt install -y python3.12 python3.12-venv ros-dev-tools 
 #RUN apt-get upgrade -y
 
 USER root
 RUN cd /usr/lib/x86_64-linux-gnu \
     && ln -s libglut.so.3.12.0 libglut.so.3
-
-RUN sudo apt install -y python3.12 python3.12-venv ros-dev-tools 
 
 RUN git clone -b master https://github.com/XPhantomad/Multispectator
 
