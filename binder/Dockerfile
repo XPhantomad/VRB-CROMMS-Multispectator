@@ -3,6 +3,7 @@ FROM intel4coro/jupyter-ros2:jazzy-py3.12
 
 
 USER root
+USER root
 ENV PATH=$HOME/.local/bin:$PATH
 
 # Set Working Directory
@@ -27,6 +28,7 @@ EXPOSE 3004
 USER root
 # Install Requirements
 RUN apt-get update && apt-get install -y git colcon cmake libfreeimage-dev libfreeimageplus-dev freeglut3-dev libxi-dev libxmu-dev liblua5.3-dev lua5.3 doxygen graphviz libgraphviz-dev asciidoc
+#RUN apt-get upgrade -y
 
 USER root
 RUN cd /usr/lib/x86_64-linux-gnu \
@@ -37,7 +39,8 @@ RUN git clone -b master https://github.com/XPhantomad/Multispectator
 USER root
 # Install ARGoS3
 RUN cd Multispectator \
-    # && git pull
+    && git pull \
+    && git checkout ad24c61ee3c448ab87dc68d301fb975c92428564 \
     && cd Dependencies \
     && apt-get install -y ./argos3_simulator-3.0.0-x86_64-beta59.deb
 
