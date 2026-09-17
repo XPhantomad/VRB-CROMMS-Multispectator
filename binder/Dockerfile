@@ -37,7 +37,7 @@ USER root
 # Install ARGoS3
 RUN cd Multispectator \
     && git pull \
-    && git checkout 57e5b967f19ff99417b1559d13c2b965dc975e60 \
+    && git checkout ead5f2d13f4977e8451377c520614454459c9a9a \
     && cd Dependencies \
     && apt-get install -y ./argos3_simulator-3.0.0-x86_64-beta59.deb
 
