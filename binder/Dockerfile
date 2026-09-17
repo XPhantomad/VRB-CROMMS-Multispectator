@@ -70,15 +70,6 @@ ENV PATH="julia-1.10.10/bin:$PATH"
 
 RUN julia -e 'using Pkg; Pkg.add.(["Sockets", "JSON", "Parameters", "Colors"])'
 
-
-# # Setup Simulation
-# RUN cd Multispectator/singleRobotController \
-#     && python3 -m venv . \
-#     && source bin/activate \
-#     && source /opt/ros/jazzy/setup.bash \
-#     && source ../rosWorkspace/install/setup.bash \
-#     && pip install pyyaml pyecore numpy 
-
 RUN cd Multispectator/webapp \
     && python3 -m venv . \
     && source bin/activate \
