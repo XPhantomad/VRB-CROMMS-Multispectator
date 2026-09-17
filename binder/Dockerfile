@@ -1,7 +1,6 @@
 # Dockerfile of the base image: https://github.com/IntEL4CoRo/jupyter-ros2/blob/main/Dockerfile
 FROM intel4coro/jupyter-ros2:jazzy-py3.12
 
-
 USER root
 USER root
 ENV PATH=$HOME/.local/bin:$PATH
@@ -15,9 +14,6 @@ ARG PROJECT_DIR=Multispectator
 
 #============= Install extra software packages =============#
 
-RUN wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
-    apt-get install -y ./google-chrome-stable_current_amd64.deb && \
-    rm google-chrome-stable_current_amd64.deb 
 EXPOSE 3004
 
 # Change the default shell to Bash
@@ -28,6 +24,7 @@ EXPOSE 3004
 USER root
 # Install Requirements
 RUN apt-get update && apt-get install -y git colcon cmake libfreeimage-dev libfreeimageplus-dev freeglut3-dev libxi-dev libxmu-dev liblua5.3-dev lua5.3 doxygen graphviz libgraphviz-dev asciidoc
+RUN sudo apt install -y python3.12 python3.12-venv ros-dev-tools 
 #RUN apt-get upgrade -y
 
 USER root
@@ -40,11 +37,11 @@ USER root
 # Install ARGoS3
 RUN cd Multispectator \
     && git pull \
-    && git checkout ad24c61ee3c448ab87dc68d301fb975c92428564 \
+    && git checkout ead5f2d13f4977e8451377c520614454459c9a9a \
     && cd Dependencies \
     && apt-get install -y ./argos3_simulator-3.0.0-x86_64-beta59.deb
 
-# Install GSL for ARGoS3-ROS2-Bridge
+# Install GSL for ARGoS3-ROS2-Bridge #TODO switch this above and provide Dependencies already in the VRB Repo
 RUN apt-get install -y libgsl-dev
 
 RUN cd Multispectator \
@@ -65,8 +62,6 @@ RUN ln -s Multispectator/rosWorkspace ros_ws
 RUN cd ros_ws \
     && chmod +x build.sh \
     && ./build.sh 
-
-RUN sudo apt install -y python3.12 python3.12-venv ros-dev-tools 
 
 RUN wget https://julialang-s3.julialang.org/bin/linux/x64/1.10/julia-1.10.10-linux-x86_64.tar.gz \
     && tar xzf julia-1.10.10-linux-x86_64.tar.gz
